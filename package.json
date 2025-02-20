@@ -1,0 +1,37 @@
+{
+  "name": "express-typescript-with-auth",
+  "main": "build/index.js",
+  "version": "0.0.1",
+  "description": "API REST construida con typescript, NodeJS y expressjs. Esta API cuenta con autenticación de usuarios y se encarga de gestionar pacientes de un doctor en su consultorio.",
+  "scripts": {
+    "start": "node build/index.js",
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtNous/express-typescript-with-auth.git"
+  },
+  "keywords": [
+    "expressjs",
+    "typescript",
+    "nodejs",
+    "doctor",
+    "apirest",
+    "auth",
+    "pacientes",
+    "historias-clinicas"
+  ],
+  "author": "Jesus Pacheco",
+  "license": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
