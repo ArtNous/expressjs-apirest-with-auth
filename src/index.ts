@@ -1,11 +1,25 @@
-import express, { Express, Request, Response } from 'express';
+import PacienteController from './controllers/Paciente'
+import HistoriaMedicaController from './controllers/HistoriaMedica'
+import registerRoute from './lib/registerRoute'
+import Server from './Server'
 
-const app: Express = express();
+/**
+ * Inicializamos el servidor express
+ */
+const server = new Server()
+/**
+ * Registramos la ruta de los pacientes
+ * Aqui realizamos el crud de los pacientes
+ */
+registerRoute(server, PacienteController)
 
-app.get('/', (_: Request, res: Response) => {
-    res.send('Hello World!');
-})
+/**
+ * Registramos la ruta de las historias medicas
+ * Aqui realizamos el crud de las historias medicas
+ */
+registerRoute(server, HistoriaMedicaController)
 
-app.listen(4000, () => {
-    console.log('Server is running on port 4000');
-})
+/**
+ * Iniciamos el servidor
+ */
+server.start()
