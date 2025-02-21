@@ -1,5 +1,5 @@
 import express, { Express, Router } from 'express';
-
+import cookieParser from 'cookie-parser'
 export default class Server {
     private app: Express;
     private port: number;
@@ -7,6 +7,7 @@ export default class Server {
     constructor() {
         this.app = express();
         this.app.use(express.json());
+        this.app.use(cookieParser())
         this.port = Number(process.env.PORT) || 3000;
     }
 

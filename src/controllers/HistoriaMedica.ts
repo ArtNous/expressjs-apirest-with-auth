@@ -4,9 +4,13 @@ import IController from "../IController";
 import { Request, Response } from 'express';
 
 class HistoriaMedicaController extends Controller implements IController, IApiController {
-    getAll(_: Request, res: Response) {
-        res.json({
-            data: []
+    getAll(req: Request, res: Response) {
+        console.log('Cookies: ', req.cookies)
+        res
+        .cookie('theme', 'dark')
+        .json({
+            data: [],
+            message: 'Cookie is set'
         })
     }
     getOne(req: Request<ApiQueryParams>, res: Response) {
