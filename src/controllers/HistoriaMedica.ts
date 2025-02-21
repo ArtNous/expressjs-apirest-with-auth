@@ -1,31 +1,45 @@
 import Controller from "../Controller";
-import HistoriaMedicaCreateDTO from "../dtos/HistoriaMedica";
 import { IApiController } from "../IApiController";
 import IController from "../IController";
 import { Request, Response } from 'express';
 
-interface QueryParams {
-    resource?: string
-}
-
 class HistoriaMedicaController extends Controller implements IController, IApiController {
     getAll(_: Request, res: Response) {
-        res.send('Todas las historias')
+        res.json({
+            data: []
+        })
     }
-    getOne(req: Request<QueryParams>, res: Response) {
+    getOne(req: Request<ApiQueryParams>, res: Response) {
         console.log(req.params.resource)
-        res.send('Una historia')
+        res.json({
+            data: {}
+        })
     }
     create(req: Request<unknown, unknown, HistoriaMedicaCreateDTO>, res: Response) {
-        const { nombre, direccion } = req.body;
-        console.log(nombre, direccion)
-        res.send('Historia creada')
+        const { glicemia, hematologia } = req.body;
+        console.log(glicemia, hematologia)
+        res.json({
+            historia: {
+                glicemia,
+                hematologia
+            }
+        })
     }
-    update() {
-        throw new Error("Method not implemented.");
+    update(req: Request<unknown, unknown, HistoriaMedicaUpdateDTO>, res: Response) {
+        const { glicemia, hematologia } = req.body;
+        console.log(glicemia, hematologia)
+        res.json({
+            historia: {
+                glicemia,
+                hematologia
+            }
+        })
     }
-    delete() {
-        throw new Error("Method not implemented.");
+    delete(req: Request<ApiQueryParams>, res: Response) {
+        const { resource } = req.params;
+        res.json({
+            message: `Historia eliminada ${resource}`
+        })
     }
     protected routePath = '/historias-medicas';
 }

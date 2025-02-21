@@ -6,19 +6,42 @@ import { Request, Response } from 'express';
 class PacienteController extends Controller implements IController, IApiController {
     protected routePath = '/pacientes';
     getAll(_: Request, res: Response) {
-        res.send('Todos los pacientes')
+        res.json({
+            data: [{
+                nombre: 'Juan',
+                direccion: 'Calle 123'
+            }]
+        })
     }
-    getOne(_: Request, res: Response) {
-        res.send('Un paciente')
+    getOne(_: Request<ApiQueryParams>, res: Response) {
+        res.json({
+            data: {
+                nombre: 'Juan',
+                direccion: 'Calle 123'
+            }
+        })
     }
-    create(_: Request, res: Response) {
-        res.send('Paciente creado')
+    create(req: Request<unknown, unknown, PacienteCreateDTO>, res: Response) {
+        const { nombre, direccion } = req.body;
+        res.json({
+            data: {
+                nombre,
+                direccion
+            }
+        })
     }
-    update(_: Request, res: Response) {
-        res.send('Paciente actualizado')
+    update(req: Request<unknown, unknown, PacienteUpdateDTO>, res: Response) {
+        const { nombre, direccion } = req.body;
+        console.log(nombre, direccion)
+        res.json({
+            message: 'Paciente actualizado'
+        })
     }
-    delete(_: Request, res: Response) {
-        res.send('Paciente eliminado')
+    delete(req: Request<ApiQueryParams>, res: Response) {
+        const { resource } = req.params;
+        res.json({
+            message: `Paciente ${resource} eliminado`
+        })
     }
 }
 

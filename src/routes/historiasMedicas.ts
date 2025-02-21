@@ -6,6 +6,8 @@ import registerRoute from "../lib/registerRoute"
 const routes = [
     ['/', HttpMethod.GET, 'getAll'],
     ['/', HttpMethod.POST, 'create'],
+    ['/:resource', HttpMethod.PUT, 'update'],
+    ['/:resource', HttpMethod.DELETE, 'delete'],
     ['/:resource', HttpMethod.GET, 'getOne'],
 ]
 
