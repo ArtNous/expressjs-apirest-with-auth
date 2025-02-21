@@ -1,20 +1,30 @@
 import express, { Express, Router } from 'express';
 import cookieParser from 'cookie-parser'
+import session from 'express-session'
 export default class Server {
     private app: Express;
     private port: number;
-    
+
     constructor() {
         this.app = express();
         this.app.use(express.json());
         this.app.use(cookieParser())
+        this.app.use(session({
+            secret: 'ñincoñinco',
+            resave: false,
+            saveUninitialized: true,
+        }))
+        this.app.use((req, _, next) => {
+            console.log('Session:', req.session);
+            next();
+        });
         this.port = Number(process.env.PORT) || 3000;
     }
 
     registerRoute(path: string, router: Router) {
         this.app.use(path, router);
     }
-    
+
     start() {
         this.app.get('/', (_, res) => {
             res.send('Hello World!');

@@ -4,24 +4,36 @@ import IController from "../IController";
 import { Request, Response } from 'express';
 
 class HistoriaMedicaController extends Controller implements IController, IApiController {
-    getAll(req: Request, res: Response) {
-        console.log('Cookies: ', req.cookies)
+    getAll(_: Request, res: Response) {
         res
-        .cookie('theme', 'dark')
-        .json({
-            data: [],
-            message: 'Cookie is set'
-        })
+            .json({
+                data: [],
+                message: 'Cookie is set'
+            })
     }
     getOne(req: Request<ApiQueryParams>, res: Response) {
         console.log(req.params.resource)
-        res.json({
-            data: {}
-        })
+        if (((req.session as unknown) as {
+            user: any
+        }).user) {
+            res.json({
+                message: 'sesion iniciada'
+            })
+        } else {
+            res.json({
+                data: {}
+            })
+        }
     }
     create(req: Request<unknown, unknown, HistoriaMedicaCreateDTO>, res: Response) {
         const { glicemia, hematologia } = req.body;
-        console.log(glicemia, hematologia)
+        console.log(glicemia, hematologia);
+        ((req.session as unknown) as {
+            user: any
+        }).user = {
+            id: 69,
+            name: 'Jesus'
+        }
         res.json({
             historia: {
                 glicemia,
