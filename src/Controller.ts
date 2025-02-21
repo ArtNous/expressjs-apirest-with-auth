@@ -1,30 +1,17 @@
-import express, { RequestHandler, Router } from 'express'
+import express, { Router } from 'express'
 
-export default abstract class Controller {
+export default class Controller {
     protected _router: Router;
-    protected routeName: string = '/';
+    protected routePath: string = '/';
 
     constructor() {
         this._router = express.Router({
             mergeParams: true
         });
-        this.defineGet();
-        this.definePost();
-        this.definePut();
-        this.defineDelete();
     }
 
-    getRouteName() {
-        return this.routeName
-    }
-
-    abstract defineGet(): void;
-    abstract definePost(): void;
-    abstract definePut(): void;
-    abstract defineDelete(): void;
-
-    registerMiddleware(middleware: RequestHandler) {
-        this.router.use(middleware)
+    getRoutePath() {
+        return this.routePath
     }
 
     get router() {

@@ -1,32 +1,33 @@
 import Controller from "../Controller";
+import HistoriaMedicaCreateDTO from "../dtos/HistoriaMedica";
+import { IApiController } from "../IApiController";
+import IController from "../IController";
+import { Request, Response } from 'express';
 
-class HistoriaMedicaController extends Controller {
-    protected routeName = '/historias-medicas';
-    defineGet() {
-        this._router.get('/', (_, res) => {
-            res.send('Obteniendo historias!');
-        })
-    }
+interface QueryParams {
+    resource?: string
+}
 
-    definePost() {
-        this._router.post('/', (_, res) => {
-            res.send('Creando historia médica!');
-        })
+class HistoriaMedicaController extends Controller implements IController, IApiController {
+    getAll(_: Request, res: Response) {
+        res.send('Todas las historias')
     }
-
-    definePut() {
-        this._router.put('/:resource', (req, res) => {
-            console.log(req.params)
-            res.send('Actualizando historia médica!');
-        })
+    getOne(req: Request<QueryParams>, res: Response) {
+        console.log(req.params.resource)
+        res.send('Una historia')
     }
-
-    defineDelete() {
-        this._router.delete('/:resource', (req, res) => {
-            console.log(req.params)
-            res.send('Eliminando historia médica!');
-        })
+    create(req: Request<unknown, unknown, HistoriaMedicaCreateDTO>, res: Response) {
+        const { nombre, direccion } = req.body;
+        console.log(nombre, direccion)
+        res.send('Historia creada')
     }
+    update() {
+        throw new Error("Method not implemented.");
+    }
+    delete() {
+        throw new Error("Method not implemented.");
+    }
+    protected routePath = '/historias-medicas';
 }
 
 const controller = new HistoriaMedicaController()

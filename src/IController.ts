@@ -1,6 +1,7 @@
+import express from 'express'
+
 export default interface IController {
-    defineGet(): void;
-    definePost(): void;
-    definePut(): void;
-    defineDelete(): void;
+    getRoutePath(): string;
+
+    router: express.Router
 }

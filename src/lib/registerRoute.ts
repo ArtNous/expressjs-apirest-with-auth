@@ -1,7 +1,6 @@
-import Controller from "../Controller";
+import IController from "../IController";
 import Server from "../Server";
 
-export default function registerRoute(server: Server, controller: Controller) {
-    console.log(`Registrando ruta ${controller.getRouteName()}`)
-    server.registerRoute(controller.getRouteName(), controller.router)
+export default function registerRoute(server: Server, controller: IController) {
+    server.registerRoute(controller.getRoutePath(), controller.router)
 }

@@ -1,23 +1,21 @@
-import PacienteController from './controllers/Paciente'
-import HistoriaMedicaController from './controllers/HistoriaMedica'
-import registerRoute from './lib/registerRoute'
 import Server from './Server'
+import { buildHistoriasMedicasRoutes, buildPacientesRoutes } from './routes'
 
 /**
  * Inicializamos el servidor express
  */
 const server = new Server()
 /**
- * Registramos la ruta de los pacientes
+ * Registramos las rutas de los pacientes
  * Aqui realizamos el crud de los pacientes
  */
-registerRoute(server, PacienteController)
+buildPacientesRoutes(server)
 
 /**
  * Registramos la ruta de las historias medicas
  * Aqui realizamos el crud de las historias medicas
  */
-registerRoute(server, HistoriaMedicaController)
+buildHistoriasMedicasRoutes(server)
 
 /**
  * Iniciamos el servidor

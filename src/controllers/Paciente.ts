@@ -1,31 +1,24 @@
 import Controller from "../Controller";
+import { IApiController } from "../IApiController";
+import IController from "../IController";
+import { Request, Response } from 'express';
 
-class PacienteController extends Controller {
-    routeName = '/paciente'
-    defineGet() {
-        this._router.get('/', (_, res) => {
-            res.send('Obteniendo pacientes!');
-        })
+class PacienteController extends Controller implements IController, IApiController {
+    protected routePath = '/pacientes';
+    getAll(_: Request, res: Response) {
+        res.send('Todos los pacientes')
     }
-
-    definePost() {
-        this._router.post('/', (_, res) => {
-            res.send('Creando paciente!');
-        })
+    getOne(_: Request, res: Response) {
+        res.send('Un paciente')
     }
-
-    definePut() {
-        this._router.put('/:resource', (req, res) => {
-            console.log(req.params)
-            res.send('Actualizando paciente!');
-        })
+    create(_: Request, res: Response) {
+        res.send('Paciente creado')
     }
-
-    defineDelete() {
-        this._router.delete('/:resource', (req, res) => {
-            console.log(req.params)
-            res.send('Eliminando paciente!');
-        })
+    update(_: Request, res: Response) {
+        res.send('Paciente actualizado')
+    }
+    delete(_: Request, res: Response) {
+        res.send('Paciente eliminado')
     }
 }
 
