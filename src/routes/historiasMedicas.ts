@@ -2,6 +2,8 @@ import Route, { HttpMethod, MethodController } from "../lib/Route"
 import Server from "../Server"
 import HistoriaMedicaController from '../controllers/HistoriaMedica'
 import registerRoute from "../lib/registerRoute"
+import auth from "./middlewares/auth"
+import isAdmin from "./middlewares/isAdmin"
 
 const routes = [
     ['/', HttpMethod.GET, 'getAll'],
@@ -18,7 +20,7 @@ export default function buildRoute(server: Server) {
             method as HttpMethod,
             path
         )
-        route.register(HistoriaMedicaController.router, handler as MethodController)
+        route.register(HistoriaMedicaController.router, handler as MethodController, [auth, isAdmin])
         registerRoute(server, HistoriaMedicaController)
     }
 }

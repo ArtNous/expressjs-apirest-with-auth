@@ -1,5 +1,6 @@
 import Server from './Server'
 import { buildHistoriasMedicasRoutes, buildPacientesRoutes } from './routes'
+import buildLoginRoute from './routes/auth/login'
 
 /**
  * Inicializamos el servidor express
@@ -16,6 +17,11 @@ buildPacientesRoutes(server)
  * Aqui realizamos el crud de las historias medicas
  */
 buildHistoriasMedicasRoutes(server)
+
+/**
+ * Login
+ */
+buildLoginRoute(server)
 
 /**
  * Iniciamos el servidor

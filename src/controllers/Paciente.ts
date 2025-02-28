@@ -30,9 +30,7 @@ class PacienteController extends Controller implements IController, IApiControll
             }
         })
     }
-    update(req: Request<unknown, unknown, PacienteUpdateDTO>, res: Response) {
-        const { nombre, direccion } = req.body;
-        console.log(nombre, direccion)
+    update(_: Request<unknown, unknown, PacienteUpdateDTO>, res: Response) {
         res.json({
             message: 'Paciente actualizado'
         })

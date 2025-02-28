@@ -17,3 +17,8 @@ interface HistoriaMedicaUpdateDTO {
     hematologia?: string;
     glicemia?: string;
 }
+
+interface LoginDTO {
+    username: string;
+    password: string;
+}

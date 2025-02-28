@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 
-RUN npm i -g pnpm && pnpm install --verbose
+RUN npm i -g pnpm && pnpm i --verbose
 
-ENV PORT=4000
+ENV PORT=$PORT
 
-EXPOSE 4000
+EXPOSE $PORT
 
 COPY . .
 
-CMD ["pnpm", "dev"]
+CMD ["pnpm", "start"]

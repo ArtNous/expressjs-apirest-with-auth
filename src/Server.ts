@@ -10,14 +10,10 @@ export default class Server {
         this.app.use(express.json());
         this.app.use(cookieParser())
         this.app.use(session({
-            secret: 'ñincoñinco',
-            resave: false,
+            secret: 'granja2025',
+            resave: true,
             saveUninitialized: true,
         }))
-        this.app.use((req, _, next) => {
-            console.log('Session:', req.session);
-            next();
-        });
         this.port = Number(process.env.PORT) || 3000;
     }
 

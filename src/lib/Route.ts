@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import { IApiController } from '../IApiController';
 
 type Method = 'get' | 'post' | 'put' | 'delete';
@@ -22,7 +22,12 @@ export default class Route {
 
     getPath() { return this.path }
 
-    register(router: express.Router, controllerMethod: MethodController) {
-        router[this.httpMethod](this.path, this.controller[controllerMethod]);
+    register(router: express.Router, controllerMethod: MethodController, middlewares?: express.RequestHandler[]) {
+        let handlers: RequestHandler[] = []
+        if (middlewares && middlewares.length > 0) {
+            handlers = handlers.concat(...middlewares)
+        }
+        handlers.push(this.controller[controllerMethod].bind(this.controller))
+        router[this.httpMethod](this.path, ...handlers);
     }
 }
