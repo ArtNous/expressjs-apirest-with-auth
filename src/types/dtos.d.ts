@@ -3,10 +3,7 @@ interface PacienteCreateDTO {
     direccion: string;
 }
 
-interface PacienteUpdateDTO {
-    nombre?: string;
-    direccion?: string;
-}
+type PacienteUpdateDTO = Partial<PacienteCreateDTO> & Omit<PacienteCreateDTO, 'idPaciente'>;
 
 interface HistoriaMedicaCreateDTO {
     hematologia: string;
