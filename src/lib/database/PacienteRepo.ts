@@ -1,13 +1,7 @@
 import { IRepo } from "./IRepo";
 
-interface Paciente {
-    idPaciente?: string;
-    nombre: string;
-    direccion: string;
-}
-
-export class PacienteRepo implements IRepo<Paciente> {
-    private pacientes: Paciente[] = [];
+export class PacienteRepo implements IRepo<PacienteModel> {
+    private pacientes: PacienteModel[] = [];
 
     static instance: PacienteRepo;
 
@@ -18,20 +12,23 @@ export class PacienteRepo implements IRepo<Paciente> {
 
         return PacienteRepo.instance
     }
-    getAll(_: number, __: number): Promise<Paciente[]> {
+    getAll(_: number, __: number): Promise<PacienteModel[]> {
         return Promise.resolve(this.pacientes)
     }
-    getOne(id: string): Promise<Paciente | undefined> {
+    getOne(id: string): Promise<PacienteModel | undefined> {
         return Promise.resolve(this.pacientes.find(paciente => paciente.idPaciente === id))
     }
-    create(data: Paciente): Promise<Paciente> {
+    create(data: PacienteModel): Promise<PacienteModel> {
         this.pacientes.push(data)
         return Promise.resolve(data)
     }
-    update(id: string, data: PacienteUpdateDTO): Promise<Paciente> {
+    update(id: string, data: PacienteUpdateDTO): Promise<PacienteModel> {
         const index = this.pacientes.findIndex(paciente => paciente.idPaciente === id)
-        this.pacientes[index] = data
-        return Promise.resolve(data)
+        this.pacientes[index] = {
+            ...this.pacientes[index],
+            ...data
+        }
+        return Promise.resolve(this.pacientes[index])
     }
     async delete(id: string): Promise<void> {
         const index = this.pacientes.findIndex(paciente => paciente.idPaciente === id)

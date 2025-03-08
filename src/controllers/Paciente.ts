@@ -23,7 +23,7 @@ class PacienteController extends Controller implements IController, IApiControll
             data: paciente
         })
     }
-    async create(req: Request<unknown, unknown, PacienteCreateDTO>, res: Response) {
+    async create(req: Request<unknown, unknown, PacienteModel>, res: Response) {
         const repo = PacienteRepo.getInstance()
         const created = await repo.create(req.body)
         res.json({
