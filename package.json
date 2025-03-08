@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "API REST construida con typescript, NodeJS y expressjs. Esta API cuenta con autenticación de usuarios y se encarga de gestionar pacientes de un doctor en su consultorio.",
   "scripts": {
-    "start": "npm run build && node dist/index.js",
+    "start": "npm run build && node --env-file=.env dist/index.js",
     "dev": "ts-node src/index.ts",
     "build": "tsc",
     "test": "jest"
@@ -36,6 +36,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
-    "express-session": "^1.18.1"
+    "express-session": "^1.18.1",
+    "yup": "^1.6.1"
   }
 }

@@ -3,7 +3,7 @@ interface PacienteCreateDTO {
     direccion: string;
 }
 
-type PacienteUpdateDTO = Partial<PacienteCreateDTO> & Omit<PacienteCreateDTO, 'idPaciente'>;
+type PacienteUpdateDTO = Required<Pick<PacienteModel, 'idPaciente'>> & Partial<PacienteModel>
 
 interface HistoriaMedicaCreateDTO {
     hematologia: string;
@@ -18,4 +18,10 @@ interface HistoriaMedicaUpdateDTO {
 interface LoginDTO {
     username: string;
     password: string;
+}
+
+interface PacienteModel {
+    idPaciente: string;
+    nombre: string;
+    direccion: string;
 }
