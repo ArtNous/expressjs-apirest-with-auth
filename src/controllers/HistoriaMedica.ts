@@ -7,12 +7,10 @@ class HistoriaMedicaController extends Controller implements IController, IApiCo
     getAll(_: Request, res: Response) {
         res
             .json({
-                data: [],
-                message: 'Cookie is set'
+                data: []
             })
     }
     getOne(req: Request<ApiQueryParams>, res: Response) {
-        console.log(req.params.resource)
         if (((req.session as unknown) as {
             user: any
         }).user) {
@@ -21,33 +19,28 @@ class HistoriaMedicaController extends Controller implements IController, IApiCo
             })
         } else {
             res.json({
-                data: {}
+                data: []
             })
         }
     }
     create(req: Request<unknown, unknown, HistoriaMedicaCreateDTO>, res: Response) {
-        const { glicemia, hematologia } = req.body;
-        console.log(glicemia, hematologia);
-        ((req.session as unknown) as {
-            user: any
-        }).user = {
-            id: 69,
-            name: 'Jesus'
-        }
+        const { glicemia, hemoglobina, isDiabetico, isHipertenso, paciente } = req.body;
         res.json({
             historia: {
                 glicemia,
-                hematologia
+                hemoglobina,
+                isDiabetico,
+                isHipertenso,
+                paciente
             }
         })
     }
     update(req: Request<unknown, unknown, HistoriaMedicaUpdateDTO>, res: Response) {
-        const { glicemia, hematologia } = req.body;
-        console.log(glicemia, hematologia)
+        const { glicemia, hemoglobina } = req.body;
         res.json({
             historia: {
                 glicemia,
-                hematologia
+                hemoglobina
             }
         })
     }

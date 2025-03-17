@@ -1,27 +1,33 @@
-interface PacienteCreateDTO {
+interface PacienteModel {
+    idPaciente: string;
     nombre: string;
     direccion: string;
 }
 
+interface HistoriaMedicaModel {
+    idHistoriaMedica: string;
+    hemoglobina: number;
+    glicemia: number;
+    isHipertenso: boolean;
+    isDiabetico: boolean;
+    paciente: Pick<PacienteModel, 'idPaciente'>;
+}
+
+type HistoriaMedicaOptionalCreateDTOKeys = 'hemoglobina' | 'glicemia'
+
+type HistoriaMedicaCreateDTO = Omit<HistoriaMedicaModel, 'idHistoriaMedica'> & {
+    [key in HistoriaMedicaOptionalCreateDTOKeys]?: HistoriaMedicaModel[key]
+}
+
+type RequiredFieldsToUpdateHistoriaMedica = 'idHistoriaMedica' | 'paciente'
+type OptionalFieldsToUpdateHistoriaMedica = 'hemoglobina' | 'glicemia' | 'isHipertenso' | 'isDiabetico'
+type HistoriaMedicaUpdateDTO = Pick<HistoriaMedicaModel, RequiredFieldsToUpdateHistoriaMedica> & Partial<Pick<HistoriaMedicaModel, OptionalFieldsToUpdateHistoriaMedica>>
+
+type PacienteCreateDTO = Omit<PacienteModel, 'idPaciente'>
 type PacienteUpdateDTO = Required<Pick<PacienteModel, 'idPaciente'>> & Partial<PacienteModel>
-
-interface HistoriaMedicaCreateDTO {
-    hematologia: string;
-    glicemia: string;
-}
-
-interface HistoriaMedicaUpdateDTO {
-    hematologia?: string;
-    glicemia?: string;
-}
 
 interface LoginDTO {
     username: string;
     password: string;
 }
 
-interface PacienteModel {
-    idPaciente: string;
-    nombre: string;
-    direccion: string;
-}
