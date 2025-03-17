@@ -20,8 +20,8 @@ export default function buildRoute(server: Server) {
         handlers.push(auth)
     }
 
+    const validator = PacienteValidator.getInstance()
     handlers.push(async (req: Request, res: Response, next: NextFunction) => {
-        const validator = new PacienteValidator()
         await validator.validate(req)
         const error = validator.getErrors()
         if (error !== null) {

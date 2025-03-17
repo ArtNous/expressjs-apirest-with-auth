@@ -7,6 +7,8 @@ export class PacienteValidator implements IValidator<PacienteModel> {
     updateSchema: yup.ObjectSchema<PacienteUpdateDTO>
     validationError: ValidationError<PacienteModel> | null = null
 
+    static validator: PacienteValidator | null = null
+
     constructor() {
         this.createSchema = yup.object({
             nombre: yup.string().required('El nombre es requerido'),
@@ -19,12 +21,20 @@ export class PacienteValidator implements IValidator<PacienteModel> {
             direccion: yup.string()
         })
     }
+    
+    static getInstance() {
+        if (PacienteValidator.validator === null) {
+            PacienteValidator.validator = new PacienteValidator()
+        }
+        return PacienteValidator.validator
+    }
 
     getErrors() {
         return this.validationError
     }
 
     async validate(req: Request) {
+        this.validationError = null
         switch (req.method) {
             case 'POST':
                 try {
