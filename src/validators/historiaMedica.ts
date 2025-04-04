@@ -10,9 +10,11 @@ export class HistoriaMedicaValidator implements IValidator<HistoriaMedicaModel> 
     static validator: HistoriaMedicaValidator | null = null
 
     constructor() {
+        const hemoglobinaCommonYup = yup.number().min(0).max(25)
+        const glicemiaCommonYup = yup.number().min(10).max(1200)
             this.createSchema = yup.object({
-                hemoglobina: yup.number().required('La hemoglobina es requerida'),
-                glicemia: yup.number().required('La glicemia es requerida'),
+                hemoglobina: hemoglobinaCommonYup.required('La hemoglobina es requerida'),
+                glicemia: glicemiaCommonYup.required('La glicemia es requerida'),
                 isHipertenso: yup.boolean().required('El isHipertenso es requerido'),
                 isDiabetico: yup.boolean().required('El isDiabetico es requerido'),
                 paciente: yup.object().shape({
@@ -24,11 +26,11 @@ export class HistoriaMedicaValidator implements IValidator<HistoriaMedicaModel> 
                 paciente: yup.object().shape({
                     idPaciente: yup.string().required('El idPaciente es requerido'),
                 }),
-                idHistoriaMedica: yup.string().required('El idHistoriaMedica es requerido'),
+                idHistoriaMedica: yup.number().required('El idHistoriaMedica es requerido'),
                 isDiabetico: yup.boolean().optional(),
                 isHipertenso: yup.boolean().optional(),
-                hemoglobina: yup.number().optional(),
-                glicemia: yup.number().optional(),
+                hemoglobina: hemoglobinaCommonYup.optional(),
+                glicemia: glicemiaCommonYup.optional(),
             })
         }
 

@@ -5,7 +5,7 @@ interface PacienteModel {
 }
 
 interface HistoriaMedicaModel {
-    idHistoriaMedica: string;
+    idHistoriaMedica: number;
     hemoglobina: number;
     glicemia: number;
     isHipertenso: boolean;
@@ -17,6 +17,10 @@ type HistoriaMedicaOptionalCreateDTOKeys = 'hemoglobina' | 'glicemia'
 
 type HistoriaMedicaCreateDTO = Omit<HistoriaMedicaModel, 'idHistoriaMedica'> & {
     [key in HistoriaMedicaOptionalCreateDTOKeys]?: HistoriaMedicaModel[key]
+}
+
+interface HistoriasUpdateParams {
+    resource?: string;
 }
 
 type RequiredFieldsToUpdateHistoriaMedica = 'idHistoriaMedica' | 'paciente'
