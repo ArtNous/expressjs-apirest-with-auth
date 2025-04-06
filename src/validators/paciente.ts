@@ -33,12 +33,12 @@ export class PacienteValidator implements IValidator<PacienteModel> {
         return this.validationError
     }
 
-    async validate(req: Request) {
+    async validate(method: API.HttpMethod, data: any) {
         this.validationError = null
-        switch (req.method) {
+        switch (method) {
             case 'POST':
                 try {
-                    await this.createSchema.validate(req.body, {
+                    await this.createSchema.validate(data, {
                         strict: true
                     })
                 } catch (error: any) {
@@ -48,7 +48,7 @@ export class PacienteValidator implements IValidator<PacienteModel> {
                 break;
             case 'PUT':
                 try {
-                    await this.updateSchema.validate(req.body, {
+                    await this.updateSchema.validate(data, {
                         strict: true
                     })
                 } catch (error: any) {

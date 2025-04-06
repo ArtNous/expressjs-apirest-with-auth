@@ -3,6 +3,6 @@ interface ApiQueryParams {
 }
 
 interface IValidator<T> {
-    validate(req: import('express').Request): Promise<void>
+    validate(method: API.HttpMethod, data: any): Promise<void>
     getErrors(): import('../validators/ValidationError').ValidationError<T> | null
 }

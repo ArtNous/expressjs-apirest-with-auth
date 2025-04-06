@@ -41,12 +41,12 @@ export class HistoriaMedicaValidator implements IValidator<HistoriaMedicaModel> 
         return HistoriaMedicaValidator.validator
     }
 
-    async validate(req: Request): Promise<void> {
+    async validate(method: API.HttpMethod, data: any): Promise<void> {
         this.validationError = null
-        switch (req.method) {
+        switch (method) {
             case 'POST':
                 try {
-                    await this.createSchema.validate(req.body, {
+                    await this.createSchema.validate(data, {
                         strict: true
                     })
                 } catch (error: any) {
@@ -56,7 +56,7 @@ export class HistoriaMedicaValidator implements IValidator<HistoriaMedicaModel> 
                 break;
             case 'PUT':
                 try {
-                    await this.updateSchema.validate(req.body, {
+                    await this.updateSchema.validate(data, {
                         strict: true
                     })
                 } catch (error: any) {
