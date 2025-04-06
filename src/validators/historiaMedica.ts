@@ -41,7 +41,7 @@ export class HistoriaMedicaValidator implements IValidator<HistoriaMedicaModel> 
         return HistoriaMedicaValidator.validator
     }
 
-    async validate(method: API.HttpMethod, data: any): Promise<void> {
+    async validate<T>(method: API.HttpMethod, data: T): Promise<void> {
         this.validationError = null
         switch (method) {
             case 'POST':

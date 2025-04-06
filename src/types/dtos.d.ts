@@ -13,7 +13,7 @@ interface HistoriaMedicaModel {
     paciente: Pick<PacienteModel, 'idPaciente'>;
 }
 
-type HistoriaMedicaOptionalCreateDTOKeys = 'hemoglobina' | 'glicemia'
+type HistoriaMedicaOptionalCreateDTOKeys = 'hemoglobina' | 'glicemia' | 'paciente'
 
 type HistoriaMedicaCreateDTO = Omit<HistoriaMedicaModel, 'idHistoriaMedica'> & {
     [key in HistoriaMedicaOptionalCreateDTOKeys]?: HistoriaMedicaModel[key]

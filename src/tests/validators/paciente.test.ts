@@ -1,6 +1,6 @@
 import { PacienteValidator } from "../../validators/paciente"
 
-describe('Validators', () => {
+describe('Paciente validator', () => {
     test('Data is valid', () => {
         const validator = new PacienteValidator()
         validator.validate('POST', {
