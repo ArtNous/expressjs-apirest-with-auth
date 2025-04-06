@@ -1,66 +1,87 @@
 import Controller from "../Controller";
+import { HistoriaMedicaRepo } from "../lib/database/HistoriaMedicaRepo";
 import { IApiController } from "../IApiController";
 import IController from "../IController";
 import { Request, Response } from 'express';
+import { IRepo } from "../lib/database/IRepo";
 
-const historias = new Map()
 
 class HistoriaMedicaController extends Controller implements IController, IApiController {
-    getAll(_: Request, res: Response) {
+    constructor(private repo: IRepo<HistoriaMedicaModel, HistoriaMedicaCreateDTO, HistoriaMedicaUpdateDTO>) {
+        super()
+    }
+    async getAll(req: Request, res: Response) {
+        const { limit = 10, offset = 0 } = req.query
+        const historias = await this.repo.getAll(Number(limit), Number(offset));
         res
             .json({
-                data: [...historias.values()],
+                data: historias,
             })
     }
-    getOne(req: Request<ApiQueryParams>, res: Response) {
+    async getOne(req: Request<ApiQueryParams>, res: Response) {
         const { resource } = req.params;
-        const historia = historias.get(resource)
-        if (!historia) {
-            return res.status(404).json({
-                message: 'Historia no encontrada'
+        if (!resource) {
+            return res.status(400).json({
+                message: 'El id es requerido'
             })
         }
-        res.json(historia)
+        try {
+            const historia = await this.repo.getOne(resource);
+            res.json(historia)
+        } catch (error: any) {
+            return res.status(404).json({
+                message: error.message
+            })
+        }
     }
-    create(req: Request<unknown, unknown, HistoriaMedicaCreateDTO>, res: Response) {
+    async create(req: Request<unknown, unknown, HistoriaMedicaCreateDTO>, res: Response) {
         const { glicemia, hemoglobina, isDiabetico, isHipertenso, paciente } = req.body;
-        const id = Math.floor(Math.random() * 1000)
-        const historia = {
-            idHistoriaMedica: id,
+        const historia = await this.repo.create({
             glicemia,
             hemoglobina,
             isDiabetico,
             isHipertenso,
             paciente
-        }
-        historias.set(id, historia)
+        });
         res.json(historia)
     }
-    update(req: Request<HistoriasUpdateParams, unknown, HistoriaMedicaUpdateDTO>, res: Response) {
-        const { glicemia, hemoglobina } = req.body;
-        const key = Number(req.params?.resource)
-        if (historias.has(key) === false) {
-            return res.status(404).json({
-                message: 'Historia no encontrada'
+    async update(req: Request<HistoriasUpdateParams, unknown, HistoriaMedicaUpdateDTO>, res: Response) {
+        const key = req.params?.resource
+        if (!key) {
+            return res.status(400).json({
+                message: 'El id es requerido'
             })
-
         }
-        historias.set(key, {
-            ...historias.get(key),
-            glicemia,
-            hemoglobina
-        })
-        res.json(historias.get(key))
+        try {
+            const historia = await this.repo.update(key, req.body)
+            res.json(historia)
+        } catch (error: any) {
+            return res.status(404).json({
+                message: error.message
+            })
+        }
     }
-    delete(req: Request<ApiQueryParams>, res: Response) {
+    async delete(req: Request<ApiQueryParams>, res: Response) {
         const { resource } = req.params;
-        historias.delete(Number(resource))
-        res.json({
-            message: `Historia eliminada ${resource}`
-        })
+        if (!resource) {
+            return res.status(400).json({
+                message: 'El id es requerido'
+            })
+        }
+        try {
+            await this.repo.delete(resource)
+            res.json({
+                message: `Historia eliminada ${resource}`
+            })
+        } catch (error: any) {
+            return res.status(404).json({
+                message: error.message
+            })
+        }
     }
     protected routePath = '/historias-medicas';
 }
 
-const controller = new HistoriaMedicaController()
+const repo = HistoriaMedicaRepo.getInstance()
+const controller = new HistoriaMedicaController(repo)
 export default controller

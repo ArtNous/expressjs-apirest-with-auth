@@ -1,6 +1,6 @@
 import { IRepo } from "./IRepo";
 
-export class PacienteRepo implements IRepo<PacienteModel> {
+export class PacienteRepo implements IRepo<PacienteModel, PacienteCreateDTO, PacienteUpdateDTO> {
     private pacientes: PacienteModel[] = [];
 
     static instance: PacienteRepo;
